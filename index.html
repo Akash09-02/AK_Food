@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ecommerce UI Demo</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+
+<body>
+  <header>
+    <div class="navbar">
+      <div class="nav-logo"><div class="logo"></div></div>
+      <div class="nav-address">
+        <p class="add-fir">Deliver To</p>
+        <div class="add-icon"><i class="fa-solid fa-location-dot"></i><p class="add-sec">India</p></div>
+      </div>
+      <div class="nav-search">
+        <select class="search-select"><option>All</option></select>
+        <input id="searchInput" placeholder="Search Products" class="search-input" />
+        <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+      </div>
+      <div class="nav-signin"><a href="dashboard.html" style="color: aliceblue;"><p><span>Hello, Sign in</span></p></a><p class="nav-sec">Account & Lists</p></div>
+      <div class="nav-return"><p><span>Returns</span></p><p class="nav-sec">& Orders</p></div>
+      <div class="nav-cart"><i class="fa-solid fa-cart-shopping"></i> Cart</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-all dropdown">
+        <i class="fa-solid fa-bars"></i>
+        <select>
+          <option>All</option>
+          <option>Mobile</option>
+          <option>Clothes</option>
+          <option>Furniture</option>
+          <option>Toys</option>
+        </select>
+      </div>
+      <div class="panel-op">
+        <p>Deals</p>
+        <p>Help Center</p>
+        <p>Registry</p>
+        <p>Sell</p>
+      </div>
+      <div class="panel-marquee">
+        <marquee behavior="scroll" direction="left" scrollamount="6" style="color: white; background-color: #232f3e; padding: 8px;">
+          Welcome to MyStore – Please Sign In to get started.
+        </marquee>
+      </div>
+      <div class="panel-deals">Browse top electronics offers</div>
+    </div>
+  </header>
+
+  <div class="hero-section">
+    <div class="hero-msg">
+      <marquee>You are on our demo ecommerce page. <a href="#">Click here to explore more.</a></marquee>
+    </div>
+  </div>
+
+  <div class="shop-sec">
+    <div class="box" data-title="Health & Personal Care"><div class="box-con"><h2>Health & Personal Care</h2><div class="box-img" style="background-image: url('box1_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title="Clothes"><div class="box-con"><h2>Clothes</h2><div class="box-img" style="background-image: url('box2_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title="Electronics"><div class="box-con"><h2>Electronics</h2><div class="box-img" style="background-image: url('box4_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title="Beauty"><div class="box-con"><h2>Beauty</h2><div class="box-img" style="background-image: url('box5_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title="Ferniture"><div class="box-con"><h2>Ferniture</h2><div class="box-img" style="background-image: url('box3_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title=""><div class="box-con"><h2>Pet Care</h2><div class="box-img" style="background-image: url('box6_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title=""><div class="box-con"><h2>Toys</h2><div class="box-img" style="background-image: url('box7_image.jpg');"></div><p>See more</p></div></div>
+    <div class="box" data-title=""><div class="box-con"><h2>Fashin</h2><div class="box-img" style="background-image: url('box8_image.jpg');"></div><p>See more</p></div></div>
+  </div>
+
+  <footer>
+    <div class="foot-panel1">Back To Top</div>
+    <div class="foot-panel2">
+      <ul><p>Get to Know Us</p><a>Careers</a><a>Blog</a><a>About MyStore</a><a>Investor Info</a><a>Our Devices</a><a>Tech Lab</a></ul>
+      <ul><p>Connect with Us</p><a>Facebook</a><a>Twitter</a><a>Instagram</a></ul>
+      <ul><p>Opportunities</p><a>Sell Products</a><a>Affiliates</a><a>Promotions</a></ul>
+      <ul><p>Support</p><a>Help Center</a><a>Your Account</a><a>Returns</a></ul>
+    </div>
+    <div class="foot-panel3"><div class="logo"></div></div>
+    <div class="foot-panel4">
+      <div class="pages"><a href="#">Terms</a><a href="#">Privacy Notice</a><a href="#">Cookies</a></div>
+      <div class="copyright">© 2025 Ecommerce UI Demo. Built by Akash Jadhav</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const searchValue = this.value.toLowerCase();
+      const boxes = document.querySelectorAll(".box");
+      boxes.forEach(box => {
+        const title = box.getAttribute("data-title").toLowerCase();
+        box.style.display = title.includes(searchValue) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
