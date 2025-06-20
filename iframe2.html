@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Product Page</title>
+  <title>Mixed Product Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <style>
     body {
@@ -54,8 +56,16 @@
       margin-top: 15px;
     }
 
-    .btn-wrap button {
-      flex: 1;
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 999;
+      display: none;
     }
 
     @media (max-width: 576px) {
@@ -65,6 +75,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -72,39 +83,90 @@
     <div id="productContainer" class="product-container"></div>
   </div>
 
+  <div id="popup" class="popup"></div>
+
   <script>
-    // Get all saved products from localStorage
-    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
-
-    // Detect current page filename like 'iframe.html'
-    const currentPage = location.pathname.split("/").pop();
-
-    // Filter products for this page only
-    const data = allProducts.filter(p => p.link === currentPage);
-
-    // Render each product card
     const container = document.getElementById("productContainer");
+    const popup = document.getElementById("popup");
 
-    data.forEach(p => {
+    function showPopup(msg) {
+      popup.textContent = msg;
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 2000);
+    }
+
+    // ✅ Static products: visible to everyone
+    const staticProducts = [
+      { name: "Oversized Hoodie", price: 999, desc: "Casual | Warm | Trendy", img: "https://imgs.search.brave.com/4xX-BhYkoBLYpaofHCmRQZjRGnCUZTz3-4OgmbYtt_g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4t/aW1nLnByZXR0eWxp/dHRsZXRoaW5nLmNv/bS9lLzcvMS9iL2U3/MWI1ODY3MjBmYWZl/OTkxYTU3YzQ2MWJi/M2E5YzA3NWFmZDdm/MjdfQ05GMDQ2M18x/X2JsYWNrX292ZXJz/aXplZF9maXR0ZWRf/aG9vZGllLmpwZz9p/bXdpZHRoPTYwMA" },
+      { name: "Classic Denim Jacket", price: 1899, desc: "Unisex | Blue Wash", img: "https://imgs.search.brave.com/zn61X8GQ_qujEKvdj6Qy-dx4jNJMqm5WOTOnRDks4wU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODF0Q3AyNllPcUwu/anBn" },
+      { name: "Graphic T-Shirt", price: 499, desc: "Cotton | Slim Fit", img: "https://imgs.search.brave.com/180ltU-_1Zui44dUmv6sgjK-Ab1NpgwsVzYB0XH0Beo/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zb2xp/ZHRocmVhZHMuY29t/L2Nkbi9zaG9wL2Zp/bGVzL0hMMDA1M01C/TF9tb2RlbF83OTZj/ZWNjZC03NGQ2LTQx/YjUtODU1ZS03ZWU4/MmYyMjk1MzFfMTYw/MHguanBnP3Y9MTcx/MDQzMjg3Mw" },
+      { name: "Jogger Pants", price: 1199, desc: "Stretch | Pockets | Urban", img: "https://imgs.search.brave.com/uk3Eoy3MGHJl2qyTe5zCW61t-DJiGGKpB7msLbwqzwQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2VhL2Uz/LzcxL2VhZTM3MTIy/MjAzZTNhMzMwYTMx/MDgyMzZmZTBlNWY5/LmpwZw" },
+      { name: "Casual Sneakers", price: 2199, desc: "Breathable | Street Style", img: "https://imgs.search.brave.com/oBtlMafbbxDCLHVMmCRGS_7VIqhZT8VxiY-Fqf_TM_4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9kMWZ1/ZnZ5NHhhbzZrOS5j/bG91ZGZyb250Lm5l/dC9pbWFnZXMvYmxv/Zy9wb3N0cy8yMDIy/LzEwLzJfZmVldF80/MS5qcGc" },
+      { name: "Knitted Beanie", price: 399, desc: "Woolen | Winter Essential", img: "https://imgs.search.brave.com/WmXVn6nVOLFWaWdbMUp5ADz8ljFt4BvF8JJ0clMOP_s/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLmV0/c3lzdGF0aWMuY29t/LzExNTY2NjkxL3Iv/aWwvMjQ0YmY2LzU2/MzcyMTU2NjIvaWxf/NjAweDYwMC41NjM3/MjE1NjYyX2swYzEu/anBn" },
+      { name: "Formal Shirt", price: 899, desc: "Slim Fit | Office Ready", img: "https://imgs.search.brave.com/fHGkngk2QGZ6QYs6kw8ef3bHW1IOzJnGpB1o6_Regn4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS11ay5sYW5kbWFy/a3Nob3BzLmluL2Nk/bi1jZ2kvaW1hZ2Uv/aD03Mzksdz00OTks/cT04NSxmaXQ9Y292/ZXIvbWF4LW5ldy8x/MDAwMDEwMDk5MDEw/LVdoaXRlLVdoaXRl/LTEwMDAwMTAwOTkw/MTAtNzA3MjAyMV8w/MS0yMTAwLmpwZw" },
+      { name: "Summer Dress", price: 1299, desc: "Floral | Breezy | Chic", img: "https://imgs.search.brave.com/PovwQC6cqVyUhplYR3PwDpyAd0swzEDpBMZlZB-D4sE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODF5ZVhKdnp4dkwu/anBn" }
+    ];
+
+    function renderCard(p) {
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
-        <img src="${p.img}" alt="${p.name}" class="product-img" />
-        <h5>${p.name}</h5>
-        <p class="text-muted text-center small">${p.desc}</p>
-        <div class="d-flex justify-content-between align-items-center w-100 mt-2">
-          <button class="price-badge">₹${p.price}</button>
-          <select class="form-select form-select-sm" style="width: 80px;">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          </select>
-        </div>
-        <div class="btn-wrap">
-          <button class="btn btn-warning btn-sm">Buy Now</button>
-          <button class="btn btn-primary btn-sm">Add to Cart</button>
-        </div>
-      `;
+      <img src="${p.img}" class="product-img" />
+      <h5>${p.name}</h5>
+      <p class="text-muted text-center small">${p.desc}</p>
+      <div class="d-flex justify-content-between align-items-center w-100 mt-2">
+        <button class="price-badge">₹${p.price}</button>
+        <select class="form-select form-select-sm quantity" style="width: 80px;">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn btn-warning btn-sm buy-btn">Buy Now</button>
+        <button class="btn btn-primary btn-sm cart-btn">Add to Cart</button>
+      </div>
+    `;
+
+      const qtySelect = card.querySelector(".quantity");
+      const priceBtn = card.querySelector(".price-badge");
+
+      qtySelect.addEventListener("change", () => {
+        const qty = parseInt(qtySelect.value);
+        priceBtn.textContent = "₹" + (qty * p.price);
+      });
+
+      card.querySelector(".buy-btn").addEventListener("click", () => {
+        showPopup("🎉 Order Confirmed!");
+      });
+
+      card.querySelector(".cart-btn").addEventListener("click", () => {
+        const qty = parseInt(qtySelect.value);
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const item = {
+          name: p.name,
+          img: p.img,
+          desc: p.desc,
+          pricePerUnit: p.price,
+          quantity: qty,
+          total: qty * p.price
+        };
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        showPopup("🛒 Product added to cart!");
+      });
+
       container.appendChild(card);
-    });
+    }
+
+    // Render static ones first
+    staticProducts.forEach(renderCard);
+
+    // 👇 Then render dynamic ones (admin added)
+    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
+    const currentPage = location.pathname.split("/").pop();
+    const dynamic = allProducts.filter(p => p.link === currentPage);
+    dynamic.forEach(renderCard);
   </script>
+
 </body>
+
 </html>

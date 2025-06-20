@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Product Page</title>
+  <title>Mixed Product Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <style>
@@ -12,12 +13,14 @@
       font-family: 'Segoe UI', sans-serif;
       padding: 30px;
     }
+
     .product-container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: flex-start;
     }
+
     .product-card {
       background: white;
       border-radius: 20px;
@@ -28,6 +31,7 @@
       flex-direction: column;
       align-items: center;
     }
+
     .product-img {
       width: 100%;
       height: 220px;
@@ -35,6 +39,7 @@
       border-radius: 12px;
       margin-bottom: 15px;
     }
+
     .price-badge {
       background: #00bfa6;
       color: white;
@@ -43,12 +48,14 @@
       border-radius: 30px;
       border: none;
     }
+
     .btn-wrap {
       display: flex;
       gap: 10px;
       width: 100%;
       margin-top: 15px;
     }
+
     .popup {
       position: fixed;
       top: 20px;
@@ -59,40 +66,91 @@
       border-radius: 8px;
       z-index: 999;
       display: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
+
     @media (max-width: 576px) {
-      .product-card { width: 100%; }
+      .product-card {
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h2 class="text-white mb-4">🌟 Featured Products</h2>
-  <div id="productContainer" class="product-container"></div>
-</div>
+  <div class="container">
+    <h2 class="text-white mb-4">🌟 Featured Products</h2>
+    <div id="productContainer" class="product-container"></div>
+  </div>
 
-<div id="popup" class="popup"></div>
+  <div id="popup" class="popup"></div>
 
-<script>
-  const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
-  const currentPage = location.pathname.split("/").pop();
-  const data = allProducts.filter(p => p.link === currentPage);
-  const container = document.getElementById("productContainer");
-  const popup = document.getElementById("popup");
+  <script>
+    const container = document.getElementById("productContainer");
+    const popup = document.getElementById("popup");
 
-  function showPopup(message) {
-    popup.textContent = message;
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 2000);
-  }
+    function showPopup(msg) {
+      popup.textContent = msg;
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 2000);
+    }
 
-  data.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <img src="${p.img}" alt="${p.name}" class="product-img" />
+    // ✅ Static products: visible to everyone
+    const staticProducts = [
+      {
+        name: "Glow Face Serum",
+        price: 799,
+        desc: "Vitamin C | Radiant Skin",
+        img: "https://imgs.search.brave.com/P5nAs63Y0-bYU4S_wsRD2JwrjGHACk6ciwrG5urnfgE/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTE3WHJIdzdtTUwu/anBn"
+      },
+      {
+        name: "Matte Lipstick",
+        price: 499,
+        desc: "Long-lasting | Bold Shades",
+        img: "https://imgs.search.brave.com/uOl5WhMZIeVP2orUXJSTvRZ8IUIIcp-TvjoehlUpGXI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLm90/dG8uZGUvaS9vdHRv/LzRlMDA3NzljLTUx/YjItNTFjZC04OGY4/LTJiZDY3Y2QxYjRl/ZD9oPTM4MCZ3PTM2/MCZzbT1jbGFtcCZ1/cHNjYWxlPXRydWUm/Zm10PWF1dG8.jpeg"
+      },
+      {
+        name: "Aloe Vera Gel",
+        price: 299,
+        desc: "Cooling | Skin Repair",
+        img: "https://imgs.search.brave.com/16o8Qh6rgXds2HLEy4d0_ifnmIX65aS6q-jogOMa3_k/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDE1enYwOTNySEwu/anBn"
+      },
+      {
+        name: "Charcoal Face Wash",
+        price: 349,
+        desc: "Oil Control | Detox Formula",
+        img: "https://imgs.search.brave.com/Hu-6VsfJ2zzUfE2DD2lvc60yVPDkVHZg4z3ckx1JfWU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFQRkhyRiswZkwu/anBn"
+      },
+      {
+        name: "Kajal Black Magic",
+        price: 199,
+        desc: "Smudge-proof | All Day Wear",
+        img: "https://imgs.search.brave.com/YNWd4mPB3nMRMEwk5L3AN9hIswNb7tW8VXPFLwDBBoI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtc3RhdGljLm55/a2FhLmNvbS9tZWRp/YS9jYXRhbG9nL3By/b2R1Y3QvZi8yL2Yy/ZmUxOTVOWUtBQzAw/MDAwMTMyLWF6XzEu/anBn"
+      },
+      {
+        name: "Rose Water Toner",
+        price: 299,
+        desc: "Hydrating | Pore Tightening",
+        img: "https://imgs.search.brave.com/86bsI8OC66t8zJ7wex8byQqcEyMchOumMHsRbUn3SMM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9uYXR1/cmVzcGVsbC5jby51/ay9jZG4vc2hvcC9m/aWxlcy9OU19Sb3Nl/V2F0ZXJGYWNlVG9u/ZXJfU2tpbmNhcmVf/SW5ncmVkaWVudC5q/cGc_Y3JvcD1jZW50/ZXImaGVpZ2h0PTIw/MDAmdj0xNzQ4OTM5/ODMxJndpZHRoPTIw/MDA"
+      },
+      {
+        name: "Nail Polish Set",
+        price: 399,
+        desc: "Glossy | Quick Dry",
+        img: "https://imgs.search.brave.com/DhIqpbx-Atd-SmomAYZxU8aZXwouVar84pj5h_vlVHk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL1Mv/YXBsdXMtbWVkaWEt/bGlicmFyeS1zZXJ2/aWNlLW1lZGlhL2Vl/YWU2YjliLWQ1Y2Qt/NDI5Mi05YzE3LWE3/ZGRlNTZjYTMyOC5f/X0NSMCwwLDM2Miw0/NTNfUFQwX1NYMzYy/X1YxX19fLmpwZw"
+      },
+      {
+        name: "Hair Serum Shine+",
+        price: 649,
+        desc: "Frizz Control | Smooth Finish",
+        img: "https://imgs.search.brave.com/d_NscRrCur6DLmp4eeoiXARpfhuCzPJgCjEne3tSLks/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLmV0/c3lzdGF0aWMuY29t/LzMzNTc2MzUyL3Iv/aWwvZjgxM2ZmLzQ2/MzcyMTU4NTgvaWxf/MzQweDI3MC40NjM3/MjE1ODU4X3N0YmIu/anBn"
+      }
+    ];
+    function renderCard(p) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+      <img src="${p.img}" class="product-img" />
       <h5>${p.name}</h5>
       <p class="text-muted text-center small">${p.desc}</p>
       <div class="d-flex justify-content-between align-items-center w-100 mt-2">
@@ -107,37 +165,47 @@
       </div>
     `;
 
-    const qtySelect = card.querySelector(".quantity");
-    const priceBtn = card.querySelector(".price-badge");
+      const qtySelect = card.querySelector(".quantity");
+      const priceBtn = card.querySelector(".price-badge");
 
-    qtySelect.addEventListener("change", () => {
-      const qty = parseInt(qtySelect.value);
-      priceBtn.textContent = "₹" + (qty * p.price).toLocaleString();
-    });
+      qtySelect.addEventListener("change", () => {
+        const qty = parseInt(qtySelect.value);
+        priceBtn.textContent = "₹" + (qty * p.price);
+      });
 
-    card.querySelector(".buy-btn").addEventListener("click", () => {
-      showPopup("🎉 Order Confirmed!");
-    });
+      card.querySelector(".buy-btn").addEventListener("click", () => {
+        showPopup("🎉 Order Confirmed!");
+      });
 
-    card.querySelector(".cart-btn").addEventListener("click", () => {
-      const qty = parseInt(qtySelect.value);
-      const item = {
-        name: p.name,
-        img: p.img,
-        desc: p.desc,
-        pricePerUnit: p.price, // ✅ Consistent naming!
-        quantity: qty,
-        total: qty * p.price
-      };
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      cart.push(item);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      showPopup("🛒 Product added to cart!");
-    });
+      card.querySelector(".cart-btn").addEventListener("click", () => {
+        const qty = parseInt(qtySelect.value);
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const item = {
+          name: p.name,
+          img: p.img,
+          desc: p.desc,
+          pricePerUnit: p.price,
+          quantity: qty,
+          total: qty * p.price
+        };
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        showPopup("🛒 Product added to cart!");
+      });
 
-    container.appendChild(card);
-  });
-</script>
+      container.appendChild(card);
+    }
+
+    // Render static ones first
+    staticProducts.forEach(renderCard);
+
+    // 👇 Then render dynamic ones (admin added)
+    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
+    const currentPage = location.pathname.split("/").pop();
+    const dynamic = allProducts.filter(p => p.link === currentPage);
+    dynamic.forEach(renderCard);
+  </script>
 
 </body>
+
 </html>

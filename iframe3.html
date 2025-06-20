@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Product Page</title>
+  <title>Mixed Product Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <style>
     body {
@@ -54,8 +56,16 @@
       margin-top: 15px;
     }
 
-    .btn-wrap button {
-      flex: 1;
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 999;
+      display: none;
     }
 
     @media (max-width: 576px) {
@@ -65,6 +75,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -72,39 +83,130 @@
     <div id="productContainer" class="product-container"></div>
   </div>
 
+  <div id="popup" class="popup"></div>
+
   <script>
-    // Get all saved products from localStorage
-    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
-
-    // Detect current page filename like 'iframe.html'
-    const currentPage = location.pathname.split("/").pop();
-
-    // Filter products for this page only
-    const data = allProducts.filter(p => p.link === currentPage);
-
-    // Render each product card
     const container = document.getElementById("productContainer");
+    const popup = document.getElementById("popup");
 
-    data.forEach(p => {
+    function showPopup(msg) {
+      popup.textContent = msg;
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 2000);
+    }
+
+    // ✅ Static products: visible to everyone
+    const staticProducts = [
+      {
+        name: "Wireless Earbuds",
+        price: 2499,
+        desc: "Bluetooth 5.3 | Compact Case",
+        img: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        name: "Smartwatch S2",
+        price: 4599,
+        desc: "Fitness | Calls | Waterproof",
+        img: "https://imgs.search.brave.com/16IW3IVy1pEw2_lpsiyBZX1IUGtRL0CZDojSls4IOsA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLmVi/YXlpbWcuY29tL2lt/YWdlcy9nL3pBMEFB/T1N3bzNOa1h5aU8v/cy1sNTAwLmpwZw"
+      },
+      {
+        name: "Bluetooth Speaker",
+        price: 1899,
+        desc: "Portable | Bass Boosted",
+        img: "https://imgs.search.brave.com/1kxaTuNhexjveCk5I4al30Lx8-uKjLI3zz-mBtwdaOU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by9ibHVldG9v/dGgtc3BlYWtlci1z/bWFydC1waG9uZS0y/NjBudy02NzU2NjIw/MjYuanBn"
+      },
+      {
+        name: "Laptop Pro 15",
+        price: 59999,
+        desc: "Core i7 | 16GB RAM | SSD",
+        img: "https://imgs.search.brave.com/R9MwcXkTwQvpuiuGaPG5kW1G9xc6TCRdgDD8TFPRJR8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zLmFs/aWNkbi5jb20vQHNj/MDQva2YvSGFhNzNh/YTk2Y2ZmYzRiNzlh/MWM4Y2RhNTU1YzUw/ZjI2ay5qcGdfMzAw/eDMwMC5qcGc"
+      },
+      {
+        name: "Smart LED TV",
+        price: 32999,
+        desc: "43-inch | Android | 4K UHD",
+        img: "https://imgs.search.brave.com/s0I4ZLrEXsnG6LKIpc4OTMUVugJ2eLd_bEjGPMSSJWM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9ydWtt/aW5pbTIuZmxpeGNh/cnQuY29tL2ltYWdl/LzMxMi8zMTIveGlm/MHEvdGVsZXZpc2lv/bi9nL2QvaS8tb3Jp/Z2luYWwtaW1hZ3Nn/dHZzcWdycHp1YS5q/cGVnP3E9NzA"
+      },
+      {
+        name: "DSLR Camera Z500",
+        price: 38999,
+        desc: "24MP | 4K Video | Wi-Fi",
+        img: "https://imgs.search.brave.com/dI7ZhqECkIhgUcFNJihDhmRdk4C8E4eKXJXIp18_Nx0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9kc2xy/LWNhbWVyYS0xNzc0/NzM3LmpwZw"
+      },
+      {
+        name: "Gaming Mouse X",
+        price: 1599,
+        desc: "RGB | 6 Buttons | Wired",
+        img: "https://imgs.search.brave.com/F-rYCFq64sj0CT6RS8geeow_4zlmvfklKjDRD1XFTJU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9hdHRh/Y2tzaGFyay5jb20v/Y2RuL3Nob3AvZmls/ZXMvM18zNjMyNGE5/Zi05YmIwLTQwYzUt/OGI1Yy05MGE0MzI4/YTkwNjYucG5nP3Y9/MTcxNjI2MzY5NyZ3/aWR0aD0xNTAw"
+      },
+      {
+        name: "Power Bank 20000mAh",
+        price: 1399,
+        desc: "Fast Charging | Dual USB",
+        img: "https://imgs.search.brave.com/nnkDsrEBc3YMnhG1HmLjj6-OOzqGmMi5vUDxKqMOqWI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9wb3dlcmJhbmst/Y2hhcmdlcy1zbWFy/dHBob25lLWlzb2xh/dGVkLWJsYWNrLWJh/Y2tncm91bmRfOTMy/MDAtMzUxMi5qcGc_/c2VtdD1haXNfaXRl/bXNfYm9vc3RlZCZ3/PTc0MA"
+      }
+    ];
+
+    function renderCard(p) {
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
-        <img src="${p.img}" alt="${p.name}" class="product-img" />
-        <h5>${p.name}</h5>
-        <p class="text-muted text-center small">${p.desc}</p>
-        <div class="d-flex justify-content-between align-items-center w-100 mt-2">
-          <button class="price-badge">₹${p.price}</button>
-          <select class="form-select form-select-sm" style="width: 80px;">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          </select>
-        </div>
-        <div class="btn-wrap">
-          <button class="btn btn-warning btn-sm">Buy Now</button>
-          <button class="btn btn-primary btn-sm">Add to Cart</button>
-        </div>
-      `;
+      <img src="${p.img}" class="product-img" />
+      <h5>${p.name}</h5>
+      <p class="text-muted text-center small">${p.desc}</p>
+      <div class="d-flex justify-content-between align-items-center w-100 mt-2">
+        <button class="price-badge">₹${p.price}</button>
+        <select class="form-select form-select-sm quantity" style="width: 80px;">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn btn-warning btn-sm buy-btn">Buy Now</button>
+        <button class="btn btn-primary btn-sm cart-btn">Add to Cart</button>
+      </div>
+    `;
+
+      const qtySelect = card.querySelector(".quantity");
+      const priceBtn = card.querySelector(".price-badge");
+
+      qtySelect.addEventListener("change", () => {
+        const qty = parseInt(qtySelect.value);
+        priceBtn.textContent = "₹" + (qty * p.price);
+      });
+
+      card.querySelector(".buy-btn").addEventListener("click", () => {
+        showPopup("🎉 Order Confirmed!");
+      });
+
+      card.querySelector(".cart-btn").addEventListener("click", () => {
+        const qty = parseInt(qtySelect.value);
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const item = {
+          name: p.name,
+          img: p.img,
+          desc: p.desc,
+          pricePerUnit: p.price,
+          quantity: qty,
+          total: qty * p.price
+        };
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        showPopup("🛒 Product added to cart!");
+      });
+
       container.appendChild(card);
-    });
+    }
+
+    // Render static ones first
+    staticProducts.forEach(renderCard);
+
+    // 👇 Then render dynamic ones (admin added)
+    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
+    const currentPage = location.pathname.split("/").pop();
+    const dynamic = allProducts.filter(p => p.link === currentPage);
+    dynamic.forEach(renderCard);
   </script>
+
 </body>
+
 </html>

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Product Page</title>
+  <title>Mixed Product Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <style>
     body {
@@ -54,8 +56,16 @@
       margin-top: 15px;
     }
 
-    .btn-wrap button {
-      flex: 1;
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 999;
+      display: none;
     }
 
     @media (max-width: 576px) {
@@ -65,6 +75,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
@@ -72,39 +83,129 @@
     <div id="productContainer" class="product-container"></div>
   </div>
 
+  <div id="popup" class="popup"></div>
+
   <script>
-    // Get all saved products from localStorage
-    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
-
-    // Detect current page filename like 'iframe.html'
-    const currentPage = location.pathname.split("/").pop();
-
-    // Filter products for this page only
-    const data = allProducts.filter(p => p.link === currentPage);
-
-    // Render each product card
     const container = document.getElementById("productContainer");
+    const popup = document.getElementById("popup");
 
-    data.forEach(p => {
+    function showPopup(msg) {
+      popup.textContent = msg;
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 2000);
+    }
+
+    // ✅ Static products: visible to everyone
+    const staticProducts = [
+      {
+        name: "Robot Action Figure",
+        price: 799,
+        desc: "Poseable | LED Eyes | Sci-fi",
+        img: "https://imgs.search.brave.com/MSiIBxRGBzdwMkkfmNe8tc2RgmUUlmBLXOu0Q2zewMA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFCZmsxRnVmdEwu/anBn"
+      },
+      {
+        name: "Stuffed Teddy Bear",
+        price: 549,
+        desc: "Soft Plush | Huggable | 12 inch",
+        img: "https://imgs.search.brave.com/kQVDd6tJ5ZVJ-tLHptOu6Mp31bdXz_q3L7G-OMhcJBQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDEwcUhNQ21ZTEwu/anBn"
+      },
+      {
+        name: "Wooden Puzzle Blocks",
+        price: 449,
+        desc: "Colorful | Educational | 3+ Age",
+        img: "https://imgs.search.brave.com/9T0WW3a6xYTq8rZBSqSS3QTONElMITcdFa5aHK-hZCw/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFGQ2I5eE1QMkwu/anBn"
+      },
+      {
+        name: "RC Racing Car",
+        price: 1199,
+        desc: "Remote Control | Rechargeable",
+        img: "https://imgs.search.brave.com/ZDvwTsxJEYPneOMFfVALSbFPNBLXZojYozCr2o1c8mI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/Lzcxck0yei1mc2VM/LmpwZw"
+      },
+      {
+        name: "Building Brick Set",
+        price: 899,
+        desc: "Interlocking | 300+ Pieces",
+        img: "https://imgs.search.brave.com/uIAbk0S9IDIkT0UMUR0ndwOdR1y516LhME_bCyUUOYo/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLmV0/c3lzdGF0aWMuY29t/LzI0MTYyMjUwL2Mv/MTIxNy85NjcvMC80/MTYvaWwvMTc3YzAw/LzM0NTI1OTE1MTUv/aWxfMzQweDI3MC4z/NDUyNTkxNTE1Xzlk/dXIuanBn"
+      },
+      {
+        name: "Dollhouse Mini Set",
+        price: 1499,
+        desc: "Wood | Handcrafted | 2 Floors",
+        img: "https://imgs.search.brave.com/4BDkVoEyFLh00e1t3FuLj4ac9thKS-OF0Qe8VlehKGA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzY3Lzg0LzEy/LzM2MF9GXzU2Nzg0/MTI4OV9UeTlkYzE3/aW42ZHR1ekJ6WFdm/aUN2ZXM4QmxhT2kx/QS5qcGc"
+      },
+      {
+        name: "Mini Basketball Hoop",
+        price: 699,
+        desc: "Indoor | With Ball & Net",
+        img: "https://imgs.search.brave.com/5xBtEcNjeEpTT4iPHSWSJ4dEurrze5x5WIakQeUk9KI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pNS53/YWxtYXJ0aW1hZ2Vz/LmNvbS9zZW8vUnVi/YmVyLU1pbmktQmFz/a2V0YmFsbC03LUlu/Y2gtU2l6ZS0zLU1p/bmktSG9vcC1PdXRk/b29yLWtpZHMtQmFz/a2V0YmFsbC1TZXQt/U21hbGwtSG9vcHMt/SW5kb29yLU91dGRv/b3ItUG9vbC1QYXJ0/aWVzLUtpZHMtQmly/dGhkYXktR2lmdHMt/UmVkLVdoaXRlLUJs/dWVfNjlhYzNmMWIt/MzgyZC00ZTY3LTgy/ZGYtZmU1YTY5ZTQ2/YjQxLmFmMjcxNWY2/OWNjNWVjNDIwMDI4/YTU0ZWU4NWE4OGIy/LmpwZWc_b2RuSGVp/Z2h0PTU4MCZvZG5X/aWR0aD01ODAmb2Ru/Qmc9RkZGRkZG"
+      },
+      {
+        name: "Magic Clay Set",
+        price: 399,
+        desc: "Soft | Air Dry | Creative Play",
+        img: "https://imgs.search.brave.com/wgZ6A0Ef0GxukOqMtM-BFUaBibeoP6GId0_x6EBXw6s/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzgxWWJCRnFWaWlM/LmpwZw"
+      }
+    ];
+    function renderCard(p) {
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
-        <img src="${p.img}" alt="${p.name}" class="product-img" />
-        <h5>${p.name}</h5>
-        <p class="text-muted text-center small">${p.desc}</p>
-        <div class="d-flex justify-content-between align-items-center w-100 mt-2">
-          <button class="price-badge">₹${p.price}</button>
-          <select class="form-select form-select-sm" style="width: 80px;">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-          </select>
-        </div>
-        <div class="btn-wrap">
-          <button class="btn btn-warning btn-sm">Buy Now</button>
-          <button class="btn btn-primary btn-sm">Add to Cart</button>
-        </div>
-      `;
+      <img src="${p.img}" class="product-img" />
+      <h5>${p.name}</h5>
+      <p class="text-muted text-center small">${p.desc}</p>
+      <div class="d-flex justify-content-between align-items-center w-100 mt-2">
+        <button class="price-badge">₹${p.price}</button>
+        <select class="form-select form-select-sm quantity" style="width: 80px;">
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn btn-warning btn-sm buy-btn">Buy Now</button>
+        <button class="btn btn-primary btn-sm cart-btn">Add to Cart</button>
+      </div>
+    `;
+
+      const qtySelect = card.querySelector(".quantity");
+      const priceBtn = card.querySelector(".price-badge");
+
+      qtySelect.addEventListener("change", () => {
+        const qty = parseInt(qtySelect.value);
+        priceBtn.textContent = "₹" + (qty * p.price);
+      });
+
+      card.querySelector(".buy-btn").addEventListener("click", () => {
+        showPopup("🎉 Order Confirmed!");
+      });
+
+      card.querySelector(".cart-btn").addEventListener("click", () => {
+        const qty = parseInt(qtySelect.value);
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const item = {
+          name: p.name,
+          img: p.img,
+          desc: p.desc,
+          pricePerUnit: p.price,
+          quantity: qty,
+          total: qty * p.price
+        };
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        showPopup("🛒 Product added to cart!");
+      });
+
       container.appendChild(card);
-    });
+    }
+
+    // Render static ones first
+    staticProducts.forEach(renderCard);
+
+    // 👇 Then render dynamic ones (admin added)
+    const allProducts = JSON.parse(localStorage.getItem("productStore") || "[]");
+    const currentPage = location.pathname.split("/").pop();
+    const dynamic = allProducts.filter(p => p.link === currentPage);
+    dynamic.forEach(renderCard);
   </script>
+
 </body>
+
 </html>
