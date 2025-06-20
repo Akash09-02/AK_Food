@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -32,19 +33,20 @@
                 </div>
             </div>
             <div class="nav-signin border">
-               <p>Hey..! U Logged In </p>
+                <p>Hey..! U Logged In</p>
             </div>
             <div class="nav-return border">
                 <p><span>Returns</span></p>
                 <p class="nav-sec">& Orders</p>
             </div>
-            <a href="cart.html" >
-            <div class="nav-cart border">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Cart
-            </div>
+            <a href="cart.html">
+                <div class="nav-cart border">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Cart
+                </div>
             </a>
         </div>
+
         <div class="panel">
             <div class="panel-all dropdown">
                 <i class="fa-solid fa-bars"></i>
@@ -57,126 +59,127 @@
                     <option>Cosmetics</option>
                     <option>Food</option>
                     <option>Jwelery</option>
-                    
                 </select>
-                
-                    
             </div>
-            <div class="panel-op">
+            <div class="panel-op" id="panelOptions">
                 <p>Today's Deals</p>
-               <a href="CustomerCare.html" style="color: azure;"> <p>Customer Service</p> </a>
+                <a href="CustomerCare.html" style="color: azure;">
+                    <p>Customer Service</p>
+                </a>
                 <p>Registry</p>
                 <p>Sells</p>
+                <!-- Admin Link dynamically added here -->
             </div>
             <div class="panel-deals">
                 Shop deals in electronics
             </div>
         </div>
     </header>
+
     <div class="hero-section">
-        
         <div class="hero-msg">
-           <marquee>You are on our demo ecommerce page. <a href="#">Click here to explore more.</a></marquee>
+            <marquee>You are on our demo ecommerce page. <a href="#">Click here to explore more.</a></marquee>
         </div>
     </div>
+
+    <!-- Inside body, only shop-sec and boxes section shown here for brevity -->
+
     <div class="shop-sec">
-        <div class="box1 box" data-title="Health & Personal Care">
+        <div class="box box1" data-title="Health & Personal Care">
             <div class="box-con">
                 <h2>Health & Personal Care</h2>
                 <div class="box-img" style="background-image: url('box2_image.jpg');"></div>
-                 <a href="iframe.html"><p>See more</p></a>
+                <a href="iframe.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box2 box" data-title="Clothes">
+
+        <div class="box box2" data-title="Clothes">
             <div class="box-con">
                 <h2>Clothes</h2>
                 <div class="box-img" style="background-image: url('box1_image.jpg');"></div>
-                <a href="iframe2.html"><p>See more</p></a>
+                <a href="iframe2.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box3 box" data-title="Furniture">
-            <div class="box-con">
-                <h2>Furniture</h2>
-                <div class="box-img" style="background-image: url('box3_image.jpg');"></div>
-               <a href="iframe3.html"><p>See more</p></a>
-            </div>
-        </div>
-        <div class="box4 box" data-title="Electronics">
+
+        <div class="box box3" data-title="Electronics">
             <div class="box-con">
                 <h2>Electronics</h2>
-                <div class="box-img" style="background-image: url('box4_image.jpg');"></div>
-                <a href="iframe4.html"><p>See more</p></a>
+                <div class="box-img" style="background-image: url('box3_image.jpg');"></div>
+                <a href="iframe3.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box1 box" data-title="Beauty Pro">
+
+        <div class="box box4" data-title="Beauty">
             <div class="box-con">
-                <h2>Beauty Pro</h2>
-                <div class="box-img" style="background-image: url('box5_image.jpg');"></div>
-                <a href="iframe5.html"><p>See more</p></a>
+                <h2>Beauty</h2>
+                <div class="box-img" style="background-image: url('box4_image.jpg');"></div>
+                <a href="iframe4.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box2 box" data-title="Pet Care">
+
+        <div class="box box1" data-title="Furniture">
+            <div class="box-con">
+                <h2>Furniture</h2>
+                <div class="box-img" style="background-image: url('box5_image.jpg');"></div>
+                <a href="iframe5.html">
+                    <p>See more</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="box box2" data-title="Pet Care">
             <div class="box-con">
                 <h2>Pet Care</h2>
                 <div class="box-img" style="background-image: url('box6_image.jpg');"></div>
-                <a href="iframe6.html"><p>See more</p></a>
+                <a href="iframe6.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box3 box" data-title="New Arrival Toys">
+
+        <div class="box box3" data-title="Toys">
             <div class="box-con">
-                <h2>New Arrival Toys</h2>
+                <h2>Toys</h2>
                 <div class="box-img" style="background-image: url('box7_image.jpg');"></div>
-                <a href="iframe7.html"><p>See more</p></a>
+                <a href="iframe7.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
-        <div class="box4 box" data-title="Discover Fashion">
+
+        <div class="box box4" data-title="Fashion">
             <div class="box-con">
-                <h2>Discover Fashion</h2>
-                <div class="box-img" style="background-image: url('box8_image.jpg');"></div>
-                <a href="iframe8.html"><p>See more</p></a>
+                <h2>Fashion</h2>
+                <div class="box-img" style="background-image: url('box2_image.jpg');"></div>
+                <a href="iframe8.html">
+                    <p>See more</p>
+                </a>
             </div>
         </div>
     </div>
+
     <footer>
-        <div class="foot-panel1">
-            Back To Top
-        </div>
+        <div class="foot-panel1">Back To Top</div>
         <div class="foot-panel2">
             <ul>
-                <p>Get to Know Us</p>
-                <a>Carriers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
+                <p>Get to Know Us</p><a>Carriers</a><a>Blog</a><a>About Amazon</a>
             </ul>
             <ul>
-                <p>Get to Know Us</p>
-                <a>Carriers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
+                <p>Investor Relations</p><a>Devices</a><a>Science</a>
             </ul>
             <ul>
-                <p>Get to Know Us</p>
-                <a>Carriers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
+                <p>Get to Know Us</p><a>Blog</a><a>Contact</a>
             </ul>
             <ul>
-                <p>Get to Know Us</p>
-                <a>Carriers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
+                <p>Support</p><a>Returns</a><a>Help</a>
             </ul>
         </div>
         <div class="foot-panel3">
@@ -193,7 +196,9 @@
             </div>
         </div>
     </footer>
+
     <script>
+        // Search filter script
         document.getElementById("searchInput").addEventListener("input", function () {
             const searchValue = this.value.toLowerCase();
             const boxes = document.querySelectorAll(".box");
@@ -202,7 +207,19 @@
                 box.style.display = title.includes(searchValue) ? "block" : "none";
             });
         });
+
+        // Admin panel visibility logic
+        const userEmail = localStorage.getItem("userEmail");
+        if (userEmail === "akashjadhav9136@gmail.com") {
+            const panelOp = document.getElementById("panelOptions");
+            const adminLink = document.createElement("a");
+            adminLink.href = "admindashboard.html";
+            adminLink.innerHTML = "<p style='color:lime;'>Admin</p>";
+            panelOp.appendChild(adminLink);
+        }
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

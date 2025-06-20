@@ -17,6 +17,12 @@
     th {
       background: #aed581;
     }
+    img.cart-thumb {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
     .btn-remove {
       background-color: #ef5350;
       color: white;
@@ -67,9 +73,9 @@
     <table class="table table-bordered text-center align-middle">
       <thead>
         <tr>
-          <th>Product</th>
+          <th>Item</th>
           <th>Unit Price</th>
-          <th>Quantity</th>
+          <th>Qty</th>
           <th>Total</th>
           <th>Actions</th>
         </tr>
@@ -79,8 +85,8 @@
   </div>
 
   <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-    <a href="iframe.html" class="btn btn-secondary">⬅️ Back to Product</a>
-    <a href="dashboard.html" class="btn btn-dark">🏠 Back to Dashboard</a>
+    <a href="iframe.html" class="btn btn-secondary">⬅️ Back to Products</a>
+    <a href="dashboard.html" class="btn btn-dark">🏠 Dashboard</a>
   </div>
 </div>
 
@@ -91,20 +97,33 @@
   const tbody = document.getElementById("cartBody");
   const popup = document.getElementById("orderPopup");
 
+  function showPopup(msg) {
+    popup.textContent = msg;
+    popup.style.display = "block";
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 2000);
+  }
+
   function renderCart() {
     tbody.innerHTML = "";
     if (cartItems.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='5'>Your cart is empty.</td></tr>";
+      tbody.innerHTML = "<tr><td colspan='5'>🕳️ Your cart is empty.</td></tr>";
       return;
     }
 
     cartItems.forEach((item, index) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${item.name}</td>
-        <td>₹${item.pricePerUnit.toLocaleString()}</td>
+        <td>
+          <div class="d-flex align-items-center gap-2 justify-content-center">
+            <img src="${item.img}" class="cart-thumb" />
+            <span>${item.name}</span>
+          </div>
+        </td>
+        <td>₹${item.pricePerUnit}</td>
         <td>${item.quantity}</td>
-        <td>₹${item.total.toLocaleString()}</td>
+        <td>₹${item.total}</td>
         <td>
           <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
           <button class="btn-buy" onclick="buyItem(${index})">Buy Now</button>
@@ -122,12 +141,7 @@
 
   function buyItem(index) {
     const item = cartItems[index];
-    popup.textContent = `🎉 Order Confirmed for "${item.name}" (₹${item.total.toLocaleString()})!`;
-    popup.style.display = "block";
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 2500);
-
+    showPopup(`🎉 Order placed for "${item.name}"`);
     cartItems.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cartItems));
     renderCart();

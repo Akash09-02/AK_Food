@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Product Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: #f1f9ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    .form-control, .form-select, .btn {
+      border-radius: 10px;
+    }
+    .product-preview {
+      margin-top: 40px;
+    }
+    .tag {
+      background: #d8ebff;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    .btn-sm {
+      font-size: 13px;
+      padding: 3px 10px;
+    }
+    table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th {
+      background-color: #e3f2fd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>👑 Admin Product Manager</h2>
+  <div class="d-flex justify-content-end">
+    <a href="dashboard.html" class="btn btn-primary mb-3">🔙 Go to Dashboard</a>
+  </div>
+
+  <!-- Product Form -->
+  <div class="row g-3 mt-1">
+    <div class="col-md-6"><input id="name" class="form-control" placeholder="Product Name" /></div>
+    <div class="col-md-6"><input id="img" class="form-control" placeholder="Image URL" /></div>
+    <div class="col-md-6"><input id="desc" class="form-control" placeholder="Product Description" /></div>
+    <div class="col-md-3"><input id="price" class="form-control" type="number" placeholder="Price" /></div>
+    
+    <div class="col-md-3">
+      <select id="category" class="form-select">
+        <option disabled selected>Select Category</option>
+        <option value="Health & Personal Care">Health & Personal Care</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Beauty">Beauty</option>
+        <option value="Ferniture">Furniture</option>
+        <option value="Pet Care">Pet Care</option>
+        <option value="Toys">Toys</option>
+        <option value="Fashin">Fashin</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+      <select id="link" class="form-select">
+        <option disabled selected>Select Target Page</option>
+        <option value="iframe.html">Health & Personal Care</option>
+        <option value="iframe2.html">Clothes</option>
+        <option value="iframe3.html">Electronics</option>
+        <option value="iframe4.html">Beauty</option>
+        <option value="iframe5.html">Furniture</option>
+        <option value="iframe6.html">Pet Care</option>
+        <option value="iframe7.html">Toys</option>
+        <option value="iframe8.html">Fashion</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+      <button class="btn btn-success w-100" onclick="addOrUpdate()">💾 Save Product</button>
+    </div>
+  </div>
+
+  <!-- Product List (Cards) -->
+  <div class="product-preview">
+    <h4 class="mt-4">📦 Existing Products</h4>
+    <ul id="productList" class="list-group mt-2"></ul>
+  </div>
+
+  <!-- Category Wise Table -->
+  <div class="product-preview mt-5">
+    <h4>📊 Products Categorized</h4>
+    <div id="categoryTableWrapper"></div>
+  </div>
+</div>
+
+<script>
+  let productData = JSON.parse(localStorage.getItem("productStore") || "[]");
+  let editingIndex = -1;
+
+  function renderList() {
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
+
+    productData.forEach((p, i) => {
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-center flex-wrap";
+      li.innerHTML = `
+        <div style="flex-grow:1;">
+          <strong>${p.name}</strong> – ₹${p.price}
+          <span class="tag">${p.category}</span>
+          <a href="${p.link}" class="ms-2" target="_blank">🔗 Page</a>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-warning btn-sm" onclick="editProduct(${i})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduct(${i})">Delete</button>
+        </div>
+      `;
+      list.appendChild(li);
+    });
+
+    renderCategoryTable();
+  }
+
+  function renderCategoryTable() {
+    const grouped = {};
+
+    productData.forEach(p => {
+      if (!grouped[p.category]) grouped[p.category] = [];
+      grouped[p.category].push(p);
+    });
+
+    const wrapper = document.getElementById("categoryTableWrapper");
+    wrapper.innerHTML = "";
+
+    for (const cat in grouped) {
+      const table = document.createElement("table");
+      table.className = "table table-bordered table-hover mt-4";
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th colspan="4">${cat}</th>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Page</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${grouped[cat].map(p => `
+            <tr>
+              <td>${p.name}</td>
+              <td>₹${p.price}</td>
+              <td><a href="${p.link}" target="_blank">${p.link}</a></td>
+              <td><img src="${p.img}" width="50" height="50" style="object-fit:cover;border-radius:5px;" /></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+      wrapper.appendChild(table);
+    }
+  }
+
+  function addOrUpdate() {
+    const name = document.getElementById("name").value.trim();
+    const img = document.getElementById("img").value.trim();
+    const desc = document.getElementById("desc").value.trim();
+    const price = parseInt(document.getElementById("price").value);
+    const category = document.getElementById("category").value;
+    const link = document.getElementById("link").value;
+
+    if (!name || !img || !desc || isNaN(price) || !category || !link) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    const product = { name, img, desc, price, category, link };
+
+    if (editingIndex === -1) {
+      productData.push(product);
+    } else {
+      productData[editingIndex] = product;
+      editingIndex = -1;
+    }
+
+    localStorage.setItem("productStore", JSON.stringify(productData));
+    renderList();
+    clearForm();
+  }
+
+  function editProduct(index) {
+    const p = productData[index];
+    document.getElementById("name").value = p.name;
+    document.getElementById("img").value = p.img;
+    document.getElementById("desc").value = p.desc;
+    document.getElementById("price").value = p.price;
+    document.getElementById("category").value = p.category;
+    document.getElementById("link").value = p.link;
+    editingIndex = index;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function deleteProduct(index) {
+    if (confirm("Are you sure you want to delete this product?")) {
+      productData.splice(index, 1);
+      localStorage.setItem("productStore", JSON.stringify(productData));
+      renderList();
+    }
+  }
+
+  function clearForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("img").value = "";
+    document.getElementById("desc").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("category").selectedIndex = 0;
+    document.getElementById("link").selectedIndex = 0;
+  }
+
+  renderList();
+</script>
+</body>
+</html>

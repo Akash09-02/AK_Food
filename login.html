@@ -74,13 +74,16 @@
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
     function signIn() {
-      const email = document.getElementById("loginEmail").value.trim();
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
       const password = document.getElementById("loginPassword").value.trim();
       const msg = document.getElementById("loginMsg");
 
-      const found = users.find(u => u.email === email && u.password === password);
+      const found = users.find(u => u.email.toLowerCase() === email && u.password === password);
 
       if (found) {
+        // ✅ Save user email to localStorage for admin access logic
+        localStorage.setItem("userEmail", found.email.trim().toLowerCase());
+
         msg.style.color = "green";
         msg.textContent = `Welcome back, ${found.name}! Redirecting...`;
         setTimeout(() => window.location.href = "dashboard.html", 1500);
