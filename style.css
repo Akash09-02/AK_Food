@@ -84,6 +84,7 @@
 .nav-cart {
     font-size: 0.85rem;
     font-weight: 700;
+    color: wheat;
 }
 
 /* Deliver Location */
@@ -176,10 +177,10 @@
 }
 
 .box-img {
-    height: 100px;
+    height: 115px;
     background-size: cover;
     background-repeat: contain;
-    margin-top: 1rem;
+    margin-top: 0.5srem;
     margin-bottom: 1rem;
 }
 

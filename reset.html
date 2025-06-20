@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reset Password</title>
+  <style>
+    body {
+      background: #e8f5e9;
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #43a047;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #resetMsg {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Reset Password</h2>
+    <input type="password" id="newPass" placeholder="New Password" />
+    <input type="password" id="confirmPass" placeholder="Confirm Password" />
+    <button onclick="resetPass()">Update Password</button>
+    <p id="resetMsg"></p>
+  </div>
+
+  <script>
+    const resetUser = JSON.parse(localStorage.getItem("resetUser"));
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const msg = document.getElementById("resetMsg");
+
+    function resetPass() {
+      const newP = document.getElementById("newPass").value.trim();
+      const confirmP = document.getElementById("confirmPass").value.trim();
+
+      if (!newP || !confirmP) {
+        msg.textContent = "Please fill both fields.";
+        msg.style.color = "red";
+        return;
+      }
+
+      if (newP !== confirmP) {
+        msg.textContent = "Passwords do not match.";
+        msg.style.color = "red";
+        return;
+      }
+
+      const index = users.findIndex(u => u.email === resetUser.email);
+      if (index !== -1) {
+        users[index].password = newP;
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.removeItem("resetUser");
+        msg.textContent = "Password reset successful! Redirecting to login...";
+        msg.style.color = "#2e7d32";
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
+      } else {
+        msg.textContent = "User not found.";
+        msg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
