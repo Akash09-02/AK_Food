@@ -50,19 +50,16 @@
         <div class="panel">
             <div class="panel-all dropdown">
                 <i class="fa-solid fa-bars"></i>
-                <select>
-                    <option>All</option>
-                    <option>Mobile</option>
-                    <option>Clothes</option>
-
-                    <option>Ferniture</option>
-
-                    <option>Furniture</option>
-
-                    <option>Toys</option>
-                    <option>Cosmetics</option>
-                    <option>Food</option>
-                    <option>Jwelery</option>
+                <select id="categoryFilter">
+                    <option value="All">All</option>
+                    <option value="Health">Health</option>
+                    <option value="Clothes">Clothes</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Beauty">Beauty</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Pet Care">Pet Care</option>
+                    <option value="Toys">Toys</option>
+                    <option value="Fashion">Fashion</option>
                 </select>
             </div>
             <div class="panel-op" id="panelOptions">
@@ -72,7 +69,6 @@
                 </a>
                 <p>Registry</p>
                 <p>Sells</p>
-                <!-- Admin Link dynamically added here -->
             </div>
             <div class="panel-deals">
                 Shop deals in electronics
@@ -86,10 +82,8 @@
         </div>
     </div>
 
-    <!-- Inside body, only shop-sec and boxes section shown here for brevity -->
-
     <div class="shop-sec">
-        <div class="box box1" data-title="Health & Personal Care">
+        <div class="box box1" data-title="Health">
             <div class="box-con">
                 <h2>Health & Personal Care</h2>
                 <div class="box-img" style="background-image: url('box2_image.jpg');"></div>
@@ -112,11 +106,7 @@
         <div class="box box3" data-title="Electronics">
             <div class="box-con">
                 <h2>Electronics</h2>
-
                 <div class="box-img" style="background-image: url('box3_image.jpg');"></div>
-
-                <div class="box-img" style="background-image: url('box4_image.jpg');"></div>
-
                 <a href="iframe3.html">
                     <p>See more</p>
                 </a>
@@ -126,11 +116,7 @@
         <div class="box box4" data-title="Beauty">
             <div class="box-con">
                 <h2>Beauty</h2>
-
                 <div class="box-img" style="background-image: url('box4_image.jpg');"></div>
-
-                <div class="box-img" style="background-image: url('box5_image.jpg');"></div>
-
                 <a href="iframe4.html">
                     <p>See more</p>
                 </a>
@@ -140,11 +126,7 @@
         <div class="box box1" data-title="Furniture">
             <div class="box-con">
                 <h2>Furniture</h2>
-
                 <div class="box-img" style="background-image: url('box5_image.jpg');"></div>
-
-                <div class="box-img" style="background-image: url('box3_image.jpg');"></div>
-
                 <a href="iframe5.html">
                     <p>See more</p>
                 </a>
@@ -214,13 +196,27 @@
     </footer>
 
     <script>
-        // Search filter script
+        // Search Input Filter
         document.getElementById("searchInput").addEventListener("input", function () {
             const searchValue = this.value.toLowerCase();
             const boxes = document.querySelectorAll(".box");
             boxes.forEach(box => {
                 const title = box.getAttribute("data-title").toLowerCase();
                 box.style.display = title.includes(searchValue) ? "block" : "none";
+            });
+        });
+
+        // Dropdown Category Filter
+        document.getElementById("categoryFilter").addEventListener("change", function () {
+            const selected = this.value.toLowerCase();
+            const boxes = document.querySelectorAll(".box");
+            boxes.forEach(box => {
+                const title = box.getAttribute("data-title").toLowerCase();
+                if (selected === "all" || title.includes(selected)) {
+                    box.style.display = "block";
+                } else {
+                    box.style.display = "none";
+                }
             });
         });
 

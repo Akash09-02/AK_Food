@@ -1,50 +1,23 @@
-<<<<<<< HEAD
-/* Existing Styles */
-=======
-/* ------------ Default Styles (Desktop / Laptop) ------------ */
->>>>>>> f19839c (update site)
 * {
     margin: 0;
-    font-family: Arial;
+    padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-<<<<<<< HEAD
-=======
 html, body {
     font-size: 16px;
+    background-color: #fff;
 }
 
-/* Navbar */
->>>>>>> f19839c (update site)
 .navbar {
     background-color: #0f1111;
     color: white;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: space-evenly;
+    align-items: center;
     padding: 10px 0;
-<<<<<<< HEAD
-    position: relative; /* NEW: for mobile absolute positioning */
-}
-.nav-logo {
-  height: 60px;
-  width: 120px; /* fixed width to match actual logo content */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* force logo to left */
-  padding-left: 10px;
-}
-
-.logo {
-  background-image: url("aakshop.png");
-  height: 60px;
-  width: 100%;
-  background-size: contain;   /* keeps full logo visible */
-  background-position: left center; /* align logo to left */
-  background-repeat: no-repeat;
-=======
     position: relative;
 }
 
@@ -53,42 +26,36 @@ html, body {
     width: 120px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     padding-left: 10px;
 }
 
 .logo {
     background-image: url("aakshop.png");
-    height: 60px;
-    width: 100%;
     background-size: contain;
     background-position: left center;
     background-repeat: no-repeat;
->>>>>>> f19839c (update site)
+    width: 100%;
+    height: 60px;
 }
 
 .border:hover {
     border: 1.5px solid white;
 }
 
-<<<<<<< HEAD
-=======
-/* Search */
->>>>>>> f19839c (update site)
 .nav-search {
     display: flex;
-    width: 100%;
     max-width: 620px;
+    width: 100%;
     height: 40px;
     background-color: pink;
     border-radius: 5px;
-    overflow: hidden;
     margin: 10px;
+    overflow: hidden;
 }
 
 .search-select {
-    background-color: #f3f3f3;
     width: 60px;
+    background-color: #f3f3f3;
     border: none;
     font-size: 1rem;
     text-align: center;
@@ -97,8 +64,8 @@ html, body {
 .search-input {
     flex: 1;
     border: none;
-    font-size: 1rem;
     padding: 0 10px;
+    font-size: 1rem;
 }
 
 .search-icon {
@@ -112,24 +79,6 @@ html, body {
     cursor: pointer;
 }
 
-/* Nav Text */
-<<<<<<< HEAD
-.nav-sec {
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-/* Cart */
-.nav-cart {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: wheat;
-}
-
-/* Deliver Location */
-.deliver-to {
-    font-size: 0.85rem;
-=======
 .nav-sec,
 .nav-cart,
 .deliver-to {
@@ -137,8 +86,11 @@ html, body {
     font-weight: 700;
 }
 
+.nav-cart {
+    color: wheat;
+}
+
 .deliver-to {
->>>>>>> f19839c (update site)
     font-weight: 600;
     text-align: left;
 }
@@ -149,55 +101,57 @@ html, body {
 
 /* Panel */
 .panel {
-    height: 40px;
     background-color: #222f3d;
     color: white;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: center;
+    height: auto;
+    padding: 10px 0;
+}
+
+.panel-all select {
+    background-color: #fff;
+    padding: 5px;
 }
 
 .panel-op {
-    width: 70%;
-    font-size: 0.85rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-size: 0.85rem;
 }
 
 .panel-op p {
-    margin: 0 15px;
+    margin: 0 10px;
 }
 
 .panel-deals {
-    font-size: 0.9rem;
     font-weight: 700;
+    font-size: 0.9rem;
 }
 
-<<<<<<< HEAD
 /* Hero Section */
-=======
-/* Hero */
->>>>>>> f19839c (update site)
 .hero-section {
     background-image: url('hero_image.jpg');
     height: 580px;
     background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
     background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .hero-msg {
     background-color: white;
     color: black;
     height: 40px;
+    width: 80%;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80%;
-    margin-bottom: 25px;
     border: 2px solid black;
     box-shadow: 1px 1px 5px pink;
 }
@@ -211,17 +165,23 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    padding: 20px 10px;
     background-color: #e2e7e6;
+    gap: 20px;
 }
 
 .box {
-    border: 2px solid black;
-    height: 200px;
-    width: 23%;
     background-color: white;
-    padding: 20px 0px 15px;
-    margin-top: 15px;
+    border: 2px solid black;
+    width: 23%;
+    min-width: 250px;
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: transform 0.3s ease;
+    border-radius: 15px;
 }
 
 .box:hover {
@@ -230,27 +190,29 @@ html, body {
 }
 
 .box-img {
-    height: 115px;
     background-size: cover;
-    background-repeat: contain;
-<<<<<<< HEAD
-    margin-top: 0.5srem;
-=======
->>>>>>> f19839c (update site)
-    margin-bottom: 1rem;
+    background-repeat: no-repeat;
+    height: 120px;
+    margin: 10px 0;
 }
 
 .box-con {
-    margin: 0 1rem;
+    text-align: center;
+}
+
+.box-con h2 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 .box-con p {
     color: blue;
+    margin-top: 10px;
 }
 
 /* Footer */
 footer {
-    margin-top: 15px;
+    margin-top: 30px;
 }
 
 .foot-panel1 {
@@ -258,28 +220,28 @@ footer {
     color: white;
     height: 50px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 0.85rem;
+    justify-content: center;
 }
 
 .foot-panel2 {
     background-color: #222f3d;
     color: white;
-    height: 300px;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 30px 0;
 }
 
 .foot-panel2 ul {
-    margin-top: 20px;
+    margin: 10px;
 }
 
 .foot-panel2 ul a {
     display: block;
     font-size: 0.85rem;
-    margin-top: 10px;
     color: #dddddd;
+    margin-top: 8px;
 }
 
 .foot-panel3 {
@@ -288,72 +250,48 @@ footer {
     border-top: 0.5px solid white;
     height: 70px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .foot-panel3 .logo {
-    background-image: url('aaaa.png');
+    background-image: url("aaaa.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     height: 50px;
     width: 100px;
-    background-size: cover;
-<<<<<<< HEAD
-    background-color: none;
-=======
->>>>>>> f19839c (update site)
 }
 
 .foot-panel4 {
     background-color: #0f1111;
     color: white;
-    height: 100px;
+    text-align: center;
+    padding: 20px;
 }
 
-<<<<<<< HEAD
 .pages {
     font-size: 0.7rem;
-    padding-top: 25px;
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
 .pages a {
-    margin: 5px 15px;
+    margin: 0 10px;
 }
 
-=======
-.pages,
-.pages a,
->>>>>>> f19839c (update site)
 .copyright {
     font-size: 0.7rem;
-    text-align: center;
-    padding-top: 25px;
 }
 
-<<<<<<< HEAD
-
-/* ---------------- Responsive ---------------- */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        padding: 10px 0;
-=======
 /* ------------ Responsive Styles (Mobile) ------------ */
-@media (max-width: 597px) {
-
+@media (max-width: 590px) {
     html, body {
         font-size: 7px;
     }
-@media (max-width:100%) {
-    
 
-    .navbar {
+@media(max-width:10%)
+{    .navbar {
         flex-direction: column;
         padding: 10px 0;
-        height: 10%;
->>>>>>> f19839c (update site)
     }
 
     .nav-logo,
@@ -362,11 +300,7 @@ footer {
     .nav-signin,
     .nav-return,
     .nav-cart {
-<<<<<<< HEAD
         width: 100%;
-=======
-        width: 10px;
->>>>>>> f19839c (update site)
         margin-bottom: 10px;
         padding: 0 10px;
     }
@@ -401,28 +335,34 @@ footer {
         padding: 4px 8px;
         border-radius: 4px;
     }
-<<<<<<< HEAD
-
-=======
 }
->>>>>>> f19839c (update site)
+
+    
+
     .panel {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         text-align: center;
         padding: 10px;
         height: auto;
     }
 
+    .panel-op {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 0.65rem; /* Lahan font-size */
+    }
+
     .panel-op p {
         margin: 4px 8px;
+        white-space: nowrap;
+        justify-content: space-evenly; /* Ekach line madhe thevnyasathi */
     }
 
     .hero-section {
-<<<<<<< HEAD
-        height: 200px;
-=======
         height: 250px;
->>>>>>> f19839c (update site)
     }
 
     .hero-msg {
@@ -438,9 +378,19 @@ footer {
         align-items: center;
     }
 
-    .box {
-        width: 90%;
-    }
+   .box {
+    background-color: white;
+    border: 2px solid black;
+    width: 90%;
+    min-width: 250px;
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+    border-radius: 15px; /* <-- Rounded corners */
+}
 
     .foot-panel2 {
         flex-direction: column;
@@ -457,8 +407,4 @@ footer {
     .pages a {
         margin: 5px 0;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f19839c (update site)

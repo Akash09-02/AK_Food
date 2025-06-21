@@ -1,0 +1,115 @@
+/* ------------ Responsive Styles (Mobile) ------------ */
+@media (max-width: 590px) {
+    html, body {
+        font-size: 7px;
+    }
+
+@media(max-width:100%)
+{    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .nav-logo,
+    .nav-address,
+    .nav-search,
+    .nav-signin,
+    .nav-return,
+    .nav-cart {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 0 10px;
+    }
+
+    .nav-search {
+        flex-direction: row;
+        width: 95%;
+        height: 50px;
+        margin: 10px auto;
+    }
+
+    .search-select {
+        width: 55px;
+        font-size: 0.85rem;
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+    }
+
+    .search-icon {
+        width: 50px;
+        font-size: 1rem;
+    }
+
+    .deliver-to {
+        position: absolute;
+        right: 10px;
+        top: 75px;
+        font-size: 0.85rem;
+        background-color: #0f1111;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+}
+
+    
+
+    .panel {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        height: auto;
+    }
+
+    .panel-op {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 0.65rem; /* Lahan font-size */
+    }
+
+    .panel-op p {
+        margin: 4px 8px;
+        white-space: nowrap;
+        justify-content: space-evenly; /* Ekach line madhe thevnyasathi */
+    }
+}
+    .hero-section {
+        height: 200px;
+    }
+
+    .hero-msg {
+        width: 90%;
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .shop-sec {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box {
+        width: 90%;
+    }
+
+    .foot-panel2 {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        height: auto;
+    }
+
+    .pages {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pages a {
+        margin: 5px 0;
+    }
