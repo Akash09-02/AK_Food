@@ -353,12 +353,16 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
         font-size: 0.65rem; /* Lahan font-size */
+        height: 10px;
     }
 
     .panel-op p {
         margin: 4px 8px;
         white-space: nowrap;
         justify-content: space-evenly; /* Ekach line madhe thevnyasathi */
+    }
+    .dropdown{
+    height: 3rem;
     }
 
     .hero-section {
