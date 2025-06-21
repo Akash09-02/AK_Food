@@ -1,10 +1,22 @@
+<<<<<<< HEAD
 /* Existing Styles */
+=======
+/* ------------ Default Styles (Desktop / Laptop) ------------ */
+>>>>>>> f19839c (update site)
 * {
     margin: 0;
     font-family: Arial;
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
+=======
+html, body {
+    font-size: 16px;
+}
+
+/* Navbar */
+>>>>>>> f19839c (update site)
 .navbar {
     background-color: #0f1111;
     color: white;
@@ -13,6 +25,7 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 10px 0;
+<<<<<<< HEAD
     position: relative; /* NEW: for mobile absolute positioning */
 }
 .nav-logo {
@@ -31,12 +44,37 @@
   background-size: contain;   /* keeps full logo visible */
   background-position: left center; /* align logo to left */
   background-repeat: no-repeat;
+=======
+    position: relative;
+}
+
+.nav-logo {
+    height: 60px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+
+.logo {
+    background-image: url("aakshop.png");
+    height: 60px;
+    width: 100%;
+    background-size: contain;
+    background-position: left center;
+    background-repeat: no-repeat;
+>>>>>>> f19839c (update site)
 }
 
 .border:hover {
     border: 1.5px solid white;
 }
 
+<<<<<<< HEAD
+=======
+/* Search */
+>>>>>>> f19839c (update site)
 .nav-search {
     display: flex;
     width: 100%;
@@ -75,6 +113,7 @@
 }
 
 /* Nav Text */
+<<<<<<< HEAD
 .nav-sec {
     font-size: 0.85rem;
     font-weight: 700;
@@ -90,6 +129,16 @@
 /* Deliver Location */
 .deliver-to {
     font-size: 0.85rem;
+=======
+.nav-sec,
+.nav-cart,
+.deliver-to {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.deliver-to {
+>>>>>>> f19839c (update site)
     font-weight: 600;
     text-align: left;
 }
@@ -125,7 +174,11 @@
     font-weight: 700;
 }
 
+<<<<<<< HEAD
 /* Hero Section */
+=======
+/* Hero */
+>>>>>>> f19839c (update site)
 .hero-section {
     background-image: url('hero_image.jpg');
     height: 580px;
@@ -180,7 +233,10 @@
     height: 115px;
     background-size: cover;
     background-repeat: contain;
+<<<<<<< HEAD
     margin-top: 0.5srem;
+=======
+>>>>>>> f19839c (update site)
     margin-bottom: 1rem;
 }
 
@@ -241,7 +297,10 @@ footer {
     height: 50px;
     width: 100px;
     background-size: cover;
+<<<<<<< HEAD
     background-color: none;
+=======
+>>>>>>> f19839c (update site)
 }
 
 .foot-panel4 {
@@ -250,6 +309,7 @@ footer {
     height: 100px;
 }
 
+<<<<<<< HEAD
 .pages {
     font-size: 0.7rem;
     padding-top: 25px;
@@ -262,18 +322,38 @@ footer {
     margin: 5px 15px;
 }
 
+=======
+.pages,
+.pages a,
+>>>>>>> f19839c (update site)
 .copyright {
     font-size: 0.7rem;
     text-align: center;
     padding-top: 25px;
 }
 
+<<<<<<< HEAD
 
 /* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
         padding: 10px 0;
+=======
+/* ------------ Responsive Styles (Mobile) ------------ */
+@media (max-width: 597px) {
+
+    html, body {
+        font-size: 7px;
+    }
+@media (max-width:100%) {
+    
+
+    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+        height: 10%;
+>>>>>>> f19839c (update site)
     }
 
     .nav-logo,
@@ -282,7 +362,11 @@ footer {
     .nav-signin,
     .nav-return,
     .nav-cart {
+<<<<<<< HEAD
         width: 100%;
+=======
+        width: 10px;
+>>>>>>> f19839c (update site)
         margin-bottom: 10px;
         padding: 0 10px;
     }
@@ -317,7 +401,11 @@ footer {
         padding: 4px 8px;
         border-radius: 4px;
     }
+<<<<<<< HEAD
 
+=======
+}
+>>>>>>> f19839c (update site)
     .panel {
         flex-direction: column;
         text-align: center;
@@ -330,7 +418,11 @@ footer {
     }
 
     .hero-section {
+<<<<<<< HEAD
         height: 200px;
+=======
+        height: 250px;
+>>>>>>> f19839c (update site)
     }
 
     .hero-msg {
@@ -365,4 +457,8 @@ footer {
     .pages a {
         margin: 5px 0;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f19839c (update site)
